@@ -31,7 +31,7 @@ public:
     string nazwa;
     string opis;
     int cena;
-    string numer_zamowienia;
+    int numer_zamowienia;
 public:
     void dodaj_czesc(string nazwaczesci, string opisczesci, int cenaczesci) {
         nazwa = nazwaczesci;
@@ -39,7 +39,7 @@ public:
         cena = cenaczesci;
        
     }
-    void dodaj_do_zamowienia(string numer_zamowieniaczesci) {
+    void dodaj_do_zamowienia(int numer_zamowieniaczesci) {
         numer_zamowienia = numer_zamowieniaczesci;
     }
 };
@@ -56,7 +56,7 @@ public:
     void rejestracja_uslugi(string numer_uslugi, string data_oddania_auta, string opis_prac, bool czy_przysluguje_zamienne, bool czy_gotowe, string rodzaj_uslugi) {
 
     }
-    bool znajdz_usluge(string numer_zlecenia) {
+    bool znajdz_usluge(int numer_zlecenia) {
        if (numer_zlecenia == numer_uslugi) {
            return true;
        }
@@ -65,7 +65,7 @@ public:
        }
     }
 
-    bool czy_przysluguje_zamienne(string numer_usl_zamiennej) {
+    bool czy_przysluguje_zamienne(int numer_usl_zamiennej) {
         if (numer_usl_zamiennej == numer_uslugi && czy_przysługuje_zamienne == true) {
             return true;
         }
@@ -171,7 +171,7 @@ void prace_serwisowe() {
     bool wynik_logowania = Logowanie(kod);
     if (wynik_logowania == true) {
         cout << "Podaj numer zlecenia: ";
-        string numer_zlecenia;
+        int numer_zlecenia;
         cin >> numer_zlecenia;
         Usługa usługa = Usługa();
         bool czy_istnieje_usluga = usługa.znajdz_usluge(numer_zlecenia);
@@ -241,7 +241,7 @@ void zamowienie_czesci() {
         cin >> ask_naprawy;
         if (ask_naprawy == "T" || ask_naprawy == "t" || ask_naprawy == "tak" || ask_naprawy == "TAK") {
             cout << "Podaj numer zlecenia" << endl;
-            string numer_zlecenia;
+            int numer_zlecenia;
             cin >> numer_zlecenia;
             Usługa usługa = Usługa();
             bool czy_istnieje_usluga = usługa.znajdz_usluge(numer_zlecenia);
@@ -269,7 +269,7 @@ void wydanie_auta_zastepczego() {
     bool wynik_logowania = Logowanie(kod);
     if (wynik_logowania == true) {
         cout << "Podaj numer zamówienia: ";
-        string numer_zamowienia_zastepcze;
+        int numer_zamowienia_zastepcze;
         cin >> numer_zamowienia_zastepcze;
         Usługa usługa = Usługa();
         bool czy_sie_nalezy = usługa.czy_przysluguje_zamienne(numer_zamowienia_zastepcze);
@@ -293,40 +293,7 @@ void wydanie_auta_zastepczego() {
     }
 }
 
-
-int main()
-{
-    setlocale(LC_CTYPE, "Polish"); //DODANIE POLSKICH ZNAKÓW DO KONSOLI
-
-    //UTWORZENIE 3 PODSTAWOWYCH POJAZDÓW ZAMIENNYCH
-    Pojazd_zamienny pojazd1("Audi", "A6", "KRK1234", 2018, "AXDWCEWCWEIU324213", "2021-02-20", true, "", "", 0, 0, 0, "Piękny i dynamiczny", 250);
-    Pojazd_zamienny pojazd2("BMW", "X6", "KR7JT6", 2016, "NDSLCBWCHEBLC", "2021-03-12", true, "", "", 0, 0, 0, "Przestronny rodzinny SUV", 250);
-    Pojazd_zamienny pojazd3("Ford", "Mustang", "ST899T", 2020, "DN32U974DN4IU2R", "2020-01-19", true, "", "", 0, 0, 0, "Szybkie sportowe auto", 250);
-
-
-
-    cout << "" << endl;
-    cout << " .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------.  .----------------. " << endl;
-    cout << "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |" << endl;
-    cout << "| | ____    ____ | || |  _________   | || |     ______   | || |  ____  ____  | || |      __      | || | ____  _____  | || |     _____    | || |  ___  ____   | |" << endl;
-    cout << "| ||_   \\  /   _|| || | |_   ___  |  | || |   .' ___  |  | || | |_   ||   _| | || |     /  \\     | || ||_   \\|_   _| | || |    |_   _|   | || | |_  ||_  _|  | |" << endl;
-    cout << "| |  |   \\/   |  | || |   | |_  \\_|  | || |  / .'   \\_|  | || |   | |__| |   | || |    / /\\ \\    | || |  |   \\ | |   | || |      | |     | || |   | |_/ /    | |" << endl;
-    cout << "| |  | |\\  /| |  | || |   |  _|  _   | || |  | |         | || |   |  __  |   | || |   / ____ \\   | || |  | |\\ \\| |   | || |      | |     | || |   |  __'.    | |" << endl;
-    cout << "| | _| |_\\/_| |_ | || |  _| |___/ |  | || |  \\ `.___.'\\  | || |  _| |  | |_  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |     _| |_    | || |  _| |  \\ \\_  | |" << endl;
-    cout << "| ||_____||_____|| || | |_________|  | || |   `._____.'  | || | |____||____| | || ||____|  |____|| || ||_____|\\____| | || |    |_____|   | || | |____||____| | |" << endl;
-    cout << "| |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |" << endl;
-    cout << "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |" << endl;
-    cout << " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' " << endl;
-    cout << "" << endl;
-
-    cout << "						 __      ____   _____ ___ ___ ___  ____  _____ _____   _____          " << endl;
-    cout << "						 \\ \\    / /\\ \\ / / _ )_ _| __| _ \\|_  / |_   _| _ \\ \\ / / _ )  " << endl;
-    cout << "						  \\ \\/\\/ /  \\ V /| _ \\| || _||   / / /    | | |   /\\ V /| _ \\  " << endl;
-    cout << "						   \\_/\\_/    |_| |___/___|___|_|_\\/___|   |_| |_|_\\ |_| |___/     " << endl;
-    cout << "						                                                                      " << endl;
-    
-    cout << endl;
-
+void tryb_pracownika() {
     cout << "                                                                                           " << endl;
     cout << "  _____ _____   _____   ___ ___    _   ___ _____      ___  _ ___ _  __   _                 " << endl;
     cout << " |_   _| _ \\ \\ / / _ ) | _ \\ _ \\  /_\\ / __/ _ \\ \\    / / \\| |_ _| |/ /  /_\\       " << endl;
@@ -364,6 +331,9 @@ int main()
         cout << "Nie ma takiej opcji! Kończymy" << endl;
     }
     //KONIEC MENU PRACOWNIKA
+}
+
+void tryb_kierownika() {
 
     cout << "                                                                              " << endl;
     cout << "  _____ _____   _____   _  _____ ___ ___  _____      ___  _ ___ _  __   _     " << endl;
@@ -373,6 +343,9 @@ int main()
     cout << "                                                                              " << endl;
     cout << "                                                                              " << endl;
 
+}
+
+void tryb_klienta() {
 
     cout << "                                                           " << endl;
     cout << "  _____ _____   _____   _  ___    ___ ___ _  _ _____ _     " << endl;
@@ -381,5 +354,58 @@ int main()
     cout << "   |_| |_|_\\ |_| |___/ |_|\\_\\____|___|___|_|\\_| |_/_/ \\_\\  " << endl;
     cout << "                                                           " << endl;
     cout << "                                                           " << endl;
+}
+int main()
+{
+    setlocale(LC_CTYPE, "Polish"); //DODANIE POLSKICH ZNAKÓW DO KONSOLI
+
+    //UTWORZENIE 3 PODSTAWOWYCH POJAZDÓW ZAMIENNYCH
+    Pojazd_zamienny pojazd1("Audi", "A6", "KRK1234", 2018, "AXDWCEWCWEIU324213", "2021-02-20", true, "", "", 0, 0, 0, "Piękny i dynamiczny", 250);
+    Pojazd_zamienny pojazd2("BMW", "X6", "KR7JT6", 2016, "NDSLCBWCHEBLC", "2021-03-12", true, "", "", 0, 0, 0, "Przestronny rodzinny SUV", 250);
+    Pojazd_zamienny pojazd3("Ford", "Mustang", "ST899T", 2020, "DN32U974DN4IU2R", "2020-01-19", true, "", "", 0, 0, 0, "Szybkie sportowe auto", 250);
+
+
+
+    cout << "" << endl;
+    cout << " .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------.  .----------------. " << endl;
+    cout << "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |" << endl;
+    cout << "| | ____    ____ | || |  _________   | || |     ______   | || |  ____  ____  | || |      __      | || | ____  _____  | || |     _____    | || |  ___  ____   | |" << endl;
+    cout << "| ||_   \\  /   _|| || | |_   ___  |  | || |   .' ___  |  | || | |_   ||   _| | || |     /  \\     | || ||_   \\|_   _| | || |    |_   _|   | || | |_  ||_  _|  | |" << endl;
+    cout << "| |  |   \\/   |  | || |   | |_  \\_|  | || |  / .'   \\_|  | || |   | |__| |   | || |    / /\\ \\    | || |  |   \\ | |   | || |      | |     | || |   | |_/ /    | |" << endl;
+    cout << "| |  | |\\  /| |  | || |   |  _|  _   | || |  | |         | || |   |  __  |   | || |   / ____ \\   | || |  | |\\ \\| |   | || |      | |     | || |   |  __'.    | |" << endl;
+    cout << "| | _| |_\\/_| |_ | || |  _| |___/ |  | || |  \\ `.___.'\\  | || |  _| |  | |_  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |     _| |_    | || |  _| |  \\ \\_  | |" << endl;
+    cout << "| ||_____||_____|| || | |_________|  | || |   `._____.'  | || | |____||____| | || ||____|  |____|| || ||_____|\\____| | || |    |_____|   | || | |____||____| | |" << endl;
+    cout << "| |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |" << endl;
+    cout << "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |" << endl;
+    cout << " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' " << endl;
+    cout << "" << endl;
+
+    cout << "						 __      ____   _____ ___ ___ ___  ____  _____ _____   _____          " << endl;
+    cout << "						 \\ \\    / /\\ \\ / / _ )_ _| __| _ \\|_  / |_   _| _ \\ \\ / / _ )  " << endl;
+    cout << "						  \\ \\/\\/ /  \\ V /| _ \\| || _||   / / /    | | |   /\\ V /| _ \\  " << endl;
+    cout << "						   \\_/\\_/    |_| |___/___|___|_|_\\/___|   |_| |_|_\\ |_| |___/     " << endl;
+    cout << "						                                                                      " << endl;
+    cout << endl;
+    cout << "[1] JESTEM KLIENTEM" << endl;
+    cout << "[2] JESTEM PRACOWNIKIEM" << endl;
+    cout << "[3] JESTEM KIEROWNIKIEM" << endl;
+    int mainmenuchoose;
+    cout << "Podaj wybór: ";
+    cin >> mainmenuchoose;
+    switch (mainmenuchoose) {
+    case 1:
+        tryb_klienta();
+        break;
+    case 2:
+        tryb_pracownika();
+        break;
+    case 3:
+        tryb_kierownika();
+        break;
+    default:
+        cout << "Nie ma takiej opcji!!!" << endl;
+        break;
+    }
+
 }
 
