@@ -87,7 +87,14 @@ class Pojazd {
     }
 };
 
-class Pojazd_zamienny : Pojazd {
+class Pojazd_zamienny {
+public:
+    string marka;
+    string model;
+    string nr_rejestracyjny;
+    int rocznik;
+    string nr_vin;
+    string ostatni_przeglad;
     bool czy_wolny;
     string data_od;
     string data_do;
@@ -96,9 +103,41 @@ class Pojazd_zamienny : Pojazd {
     int id_klienta;
     string opis;
     int cena_za_dobe;
-
+public:
+    Pojazd_zamienny(string marka, string model, string nr_rejestracyjny, int rocznik, string nr_vin, string ostatni_przeglad, bool czy_wolny, string data_od, string data_do, int przebieg_początkowy, int przebieg_zwrócony, int id_klienta, string opis, int cena_za_dobe) {
+        this->marka = marka;
+        this->model = model;
+        this->nr_rejestracyjny = nr_rejestracyjny;
+        this->rocznik = rocznik;
+        this->nr_vin = nr_vin;
+        this->ostatni_przeglad = ostatni_przeglad;
+        this->czy_wolny = czy_wolny;
+        this->data_od = data_od;
+        this->data_do = data_do;
+        this->przebieg_początkowy = przebieg_początkowy;
+        this->przebieg_zwrócony = przebieg_zwrócony;
+        this->id_klienta = id_klienta;
+        this->opis = opis;
+        this->cena_za_dobe = cena_za_dobe;
+    }
     int ile_przejechano(int przebieg_początkowy, int przebieg_zwrócony) {
         return przebieg_zwrócony - przebieg_początkowy;
+    }
+    void wypisz_pojazd_zamienny() {
+        cout << "Marka tego auta zastępczego to: " << marka << endl;
+        cout << "Model tego auta zastępczego to: " << model << endl;
+        cout << "Numer rejestracyjny tego auta zastępczego to: " << nr_rejestracyjny << endl;
+        cout << "Rocznik tego auta zastępczego to: " << rocznik << endl;
+        cout << "Nr vin tego auta zastępczego to: " << nr_vin << endl;
+        cout << "Ostatni przegląd tego auta zastępczego to: " << ostatni_przeglad << endl;
+        cout << "Czy auto jest wolne: " << czy_wolny << endl;
+        cout << "Wypożyczony od: " << data_od << endl;
+        cout << "Wypożyczony do: " << data_do << endl;
+        cout << "Przebieg początkowy tego auta zastępczego to: " << przebieg_początkowy << endl;
+        cout << "Przebieg zwrócony tego auta zastępczego to: " << przebieg_zwrócony << endl;
+        cout << " tego auta zastępczego to: " << id_klienta << endl;
+        cout << "Opis tego auta zastępczego to: " << opis << endl;
+        cout << "Cena za dobę tego auta zastępczego to: " << cena_za_dobe << endl;
     }
     bool wypozycz(bool czy_wolny) {
         if (czy_wolny == true) {
@@ -226,7 +265,15 @@ void zamowienie_czesci() {
 
 int main()
 {
-    setlocale(LC_CTYPE, "Polish");
+    setlocale(LC_CTYPE, "Polish"); //DODANIE POLSKICH ZNAKÓW DO KONSOLI
+
+    //UTWORZENIE 3 PODSTAWOWYCH POJAZDÓW ZAMIENNYCH
+    Pojazd_zamienny pojazd1("Audi", "A6", "KRK1234", 2018, "AXDWCEWCWEIU324213", "2021-02-20", true, "", "", 0, 0, 0, "Piękny i dynamiczny", 250);
+    Pojazd_zamienny pojazd2("BMW", "X6", "KR7JT6", 2016, "NDSLCBWCHEBLC", "2021-03-12", true, "", "", 0, 0, 0, "Przestronny rodzinny SUV", 250);
+    Pojazd_zamienny pojazd3("Ford", "Mustang", "ST899T", 2020, "DN32U974DN4IU2R", "2020-01-19", true, "", "", 0, 0, 0, "Szybkie sportowe auto", 250);
+
+
+
     cout << "" << endl;
     cout << " .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------.  .----------------. " << endl;
     cout << "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |" << endl;
@@ -255,7 +302,7 @@ int main()
     cout << "   | | |   /\\ V /| _ \\ |  _/   / / _ \\ (_| (_) \\ \\/\\/ /| .` || || ' <  / _ \\        " << endl;
     cout << "   |_| |_|_\\ |_| |___/ |_| |_|_\\/_/ \\_\\___\\___/ \\_/\\_/ |_|\\_|___|_|\\_\\/_/ \\_\\  " << endl;
     cout << "                                                                                           " << endl;
-
+    //MENU PRACOWNIKA
     cout << "[1] Rejestrowanie prac serwisowych" << endl;
     cout << "[2] Zamówienie części" << endl;
     cout << "[3] Wydanie auta zastępczego" << endl;
@@ -285,7 +332,7 @@ int main()
     default:
         cout << "Nie ma takiej opcji! Kończymy" << endl;
     }
-
+    //KONIEC MENU PRACOWNIKA
 
     cout << "                                                                              " << endl;
     cout << "  _____ _____   _____   _  _____ ___ ___  _____      ___  _ ___ _  __   _     " << endl;
