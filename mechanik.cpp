@@ -51,7 +51,7 @@ public:
     bool czy_przysługuje_zamienne;
     bool czy_gotowe;
     string rodzaj_usługi;
-    string numer_uslugi;
+    int numer_uslugi;
 public:
     void rejestracja_uslugi(string numer_uslugi, string data_oddania_auta, string opis_prac, bool czy_przysluguje_zamienne, bool czy_gotowe, string rodzaj_uslugi) {
 
@@ -65,6 +65,15 @@ public:
        }
     }
 
+    bool czy_przysluguje_zamienne(string numer_usl_zamiennej) {
+        if (numer_usl_zamiennej == numer_uslugi && czy_przysługuje_zamienne == true) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     void dodaj_opis(string dodawany_opis) {
         opis_prac = opis_prac + dodawany_opis;
     }
@@ -73,19 +82,6 @@ public:
     }
 };
 
-class Pojazd {
-    string marka;
-    string model;
-    string nr_rejestracyjny;
-    int rocznik;
-    string nr_vin;
-    string ostatni_przeglad;
-    int id_klienta;
-
-    void dodajPojazd() {
-
-    }
-};
 
 class Pojazd_zamienny {
 public:
@@ -156,19 +152,22 @@ public:
 
 };
 
-class Pojazd_klienta :Pojazd {
+class Pojazd_klienta {
+    string marka;
+    string model;
+    string nr_rejestracyjny;
+    int rocznik;
+    string nr_vin;
+    string ostatni_przeglad;
     int id_klienta;
 
-    void dodaj_pojazd_klienta() {
-
-    }
 };
 
 
 void prace_serwisowe() {
     cout << "Podaj kod autoryzacyjny: ";
     int kod;
-    cin >> kod;
+    cin>>kod;
     bool wynik_logowania = Logowanie(kod);
     if (wynik_logowania == true) {
         cout << "Podaj numer zlecenia: ";
@@ -262,6 +261,38 @@ void zamowienie_czesci() {
         cout << "Logowanie błędne "<< endl;    
     }
 }
+
+void wydanie_auta_zastepczego() {
+    cout << "Podaj kod autoryzacyjny: ";
+    int kod;
+    cin >> kod;
+    bool wynik_logowania = Logowanie(kod);
+    if (wynik_logowania == true) {
+        cout << "Podaj numer zamówienia: ";
+        string numer_zamowienia_zastepcze;
+        cin >> numer_zamowienia_zastepcze;
+        Usługa usługa = Usługa();
+        bool czy_sie_nalezy = usługa.czy_przysluguje_zamienne(numer_zamowienia_zastepcze);
+        if (czy_sie_nalezy == true) {
+            cout << "Auto zastępcze do tej usługi jest przypisane poprawnie" << endl;
+            cout << "Wpisz przebieg początkowy: ";
+            int przebieg_poczatkowy;
+            cin >> przebieg_poczatkowy;
+            cout << "Wpisz datę wydania auta: ";
+            int data_wydania;
+            cin >> data_wydania;
+            cout << "Auto zostało zaktualizowane jako wynajęte z przypisaną datą wydania auta" << endl;
+            cout << "Wydaj kluczki klientowi" << endl;
+        }
+        else {
+            cout << "Do takiego zamówienia nie ma przypisanego auta zastępczego!" << endl;
+        }
+    }
+    else {
+        cout << "Logowanie błędne" << endl;
+    }
+}
+
 
 int main()
 {
