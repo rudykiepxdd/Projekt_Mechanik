@@ -2,17 +2,37 @@
 
 using namespace std;
 
-class Osoba {
+
+class Pracownik {
 public:
     string imie;
     string nazwisko;
     string nr_telefonu;
-
+    int kod_pracownika;
+   
 };
 
-class Pracownik :Osoba {
+class Klient {
 public:
-    int kod_pracownika;
+    string imie;
+    string nazwisko;
+    string nr_telefonu;
+    int numer_rezerwacji;
+public:
+    void utworz_klienta(string imie, string nazwisko, string nr_telefonu, int numer_rezerwacji) {
+        this->imie = imie;
+        this->nazwisko = nazwisko;
+        this->nr_telefonu = nr_telefonu;
+        this->numer_rezerwacji = numer_rezerwacji;
+    }
+};
+
+class Kierownik {
+public:
+    string imie;
+    string nazwisko;
+    string nr_telefonu;
+    int kod_kierownika;
 };
 
 bool Logowanie(int kod_pracownika) {
@@ -100,7 +120,23 @@ public:
     string opis;
     int cena_za_dobe;
 public:
+    void utworzPojazdZamienny(string marka, string model, string nr_rejestracyjny, int rocznik, string nr_vin, string ostatni_przeglad, bool czy_wolny, string data_od, string data_do, int przebieg_początkowy, int przebieg_zwrócony, int id_klienta, string opis, int cena_za_dobe ) {
 
+        this->marka = marka;
+        this->model = model;
+        this->nr_rejestracyjny = nr_rejestracyjny;
+        this->rocznik = rocznik;
+        this->nr_vin = nr_vin;
+        this->ostatni_przeglad = ostatni_przeglad;
+        this->czy_wolny = czy_wolny;
+        this->data_od = data_od;
+        this->data_do = data_do;
+        this->przebieg_początkowy = przebieg_początkowy;
+        this->przebieg_zwrócony = przebieg_zwrócony;
+        this->id_klienta = id_klienta;
+        this->opis = opis;
+        this->cena_za_dobe = cena_za_dobe;
+    }
     int ile_przejechano(int przebieg_początkowy, int przebieg_zwrócony) {
         return przebieg_zwrócony - przebieg_początkowy;
     }
@@ -439,9 +475,27 @@ int main()
     setlocale(LC_CTYPE, "Polish"); //DODANIE POLSKICH ZNAKÓW DO KONSOLI
 
     //UTWORZENIE 3 PODSTAWOWYCH POJAZDÓW ZAMIENNYCH
-    //Pojazd_zamienny pojazd1("Audi", "A6", "KRK1234", 2018, "AXDWCEWCWEIU324213", "2021-02-20", true, "", "", 0, 0, 0, "Piękny i dynamiczny", 250);
-    //Pojazd_zamienny pojazd2("BMW", "X6", "KR7JT6", 2016, "NDSLCBWCHEBLC", "2021-03-12", true, "", "", 0, 0, 0, "Przestronny rodzinny SUV", 250);
-    //Pojazd_zamienny pojazd3("Ford", "Mustang", "ST899T", 2020, "DN32U974DN4IU2R", "2020-01-19", true, "", "", 0, 0, 0, "Szybkie sportowe auto", 250);
+    Pojazd_zamienny pojazd1 = Pojazd_zamienny();
+    Pojazd_zamienny pojazd2 = Pojazd_zamienny();
+    Pojazd_zamienny pojazd3 = Pojazd_zamienny();
+    pojazd1.utworzPojazdZamienny("Audi", "A6", "KRK1234", 2018, "AXDWCEWCWEIU324213", "2021-02-20", true, "", "", 0, 0, 0, "Piękny i dynamiczny", 250);
+    pojazd2.utworzPojazdZamienny("BMW", "X6", "KR7JT6", 2016, "NDSLCBWCHEBLC", "2021-03-12", true, "", "", 0, 0, 0, "Przestronny rodzinny SUV", 250);
+    pojazd3.utworzPojazdZamienny("Ford", "Mustang", "ST899T", 2020, "DN32U974DN4IU2R", "2020-01-19", true, "", "", 0, 0, 0, "Szybkie sportowe auto", 250);
+
+    //UTWORZENIE PRZYKŁADOWYCH OBIEKTÓW KLAS
+
+    //jeden sposób na pracownika, bez tworzenia niczego w klasie
+    Pracownik pracownik1 = Pracownik();
+    pracownik1.imie = "Jan";
+    pracownik1.nazwisko = "Robotnik";
+    pracownik1.nr_telefonu = "666 555 444";
+    pracownik1.kod_pracownika = 1234;
+
+    //drugi sposób dzięki któremu będzie wam łatwiej stworzyć, poprzez funkcję dodania
+    Klient klient1 = Klient();
+    klient1.utworz_klienta("Janek", "Kimono", "654 544 332",1111);
+
+
 
     //ODPALENIE MENU GŁÓWNEGO
     menu_glowne();
