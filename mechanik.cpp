@@ -100,22 +100,7 @@ public:
     string opis;
     int cena_za_dobe;
 public:
-    Pojazd_zamienny(string marka, string model, string nr_rejestracyjny, int rocznik, string nr_vin, string ostatni_przeglad, bool czy_wolny, string data_od, string data_do, int przebieg_początkowy, int przebieg_zwrócony, int id_klienta, string opis, int cena_za_dobe) {
-        this->marka = marka;
-        this->model = model;
-        this->nr_rejestracyjny = nr_rejestracyjny;
-        this->rocznik = rocznik;
-        this->nr_vin = nr_vin;
-        this->ostatni_przeglad = ostatni_przeglad;
-        this->czy_wolny = czy_wolny;
-        this->data_od = data_od;
-        this->data_do = data_do;
-        this->przebieg_początkowy = przebieg_początkowy;
-        this->przebieg_zwrócony = przebieg_zwrócony;
-        this->id_klienta = id_klienta;
-        this->opis = opis;
-        this->cena_za_dobe = cena_za_dobe;
-    }
+
     int ile_przejechano(int przebieg_początkowy, int przebieg_zwrócony) {
         return przebieg_zwrócony - przebieg_początkowy;
     }
@@ -135,18 +120,27 @@ public:
         cout << "Opis tego auta zastępczego to: " << opis << endl;
         cout << "Cena za dobę tego auta zastępczego to: " << cena_za_dobe << endl;
     }
-    bool wypozycz(bool czy_wolny) {
-        if (czy_wolny == true) {
+    bool wypozycz(int idklienta) {
+        if (idklienta == id_klienta && czy_wolny == true) {
             czy_wolny = false;
+            return true;
         }
         else {
-            cout << "Auto jest już zajęte" << endl;
+
+            return false;
+        }
+    }
+    bool oddaj(int idklienta) {
+        if (idklienta == id_klienta && czy_wolny == false) {
+            czy_wolny = true;
+            return true;
+        }
+        else {
+            
+            return false;
         }
     }
     int cena_za_wypozyczenie() {
-
-    }
-    void dodaj_pojazd_zamienny() {
 
     }
 
@@ -272,6 +266,7 @@ void wydanie_auta_zastepczego() {
         int numer_zamowienia_zastepcze;
         cin >> numer_zamowienia_zastepcze;
         Usługa usługa = Usługa();
+        
         bool czy_sie_nalezy = usługa.czy_przysluguje_zamienne(numer_zamowienia_zastepcze);
         if (czy_sie_nalezy == true) {
             cout << "Auto zastępcze do tej usługi jest przypisane poprawnie" << endl;
@@ -281,8 +276,17 @@ void wydanie_auta_zastepczego() {
             cout << "Wpisz datę wydania auta: ";
             int data_wydania;
             cin >> data_wydania;
-            cout << "Auto zostało zaktualizowane jako wynajęte z przypisaną datą wydania auta" << endl;
-            cout << "Wydaj kluczki klientowi" << endl;
+            Pojazd_zamienny zamiennik = Pojazd_zamienny();
+            bool wypozyczenie = zamiennik.wypozycz(numer_zamowienia_zastepcze);
+
+            if (wypozyczenie == true) {
+                cout << "Auto zostało zaktualizowane jako wynajęte z przypisaną datą wydania auta" << endl;
+                cout << "Wydaj kluczki klientowi" << endl;
+            }
+            else {
+                cout << "Nie udało się wypożyczyć auta, może jest ono już wypożyczone?" << endl;
+            }
+            
         }
         else {
             cout << "Do takiego zamówienia nie ma przypisanego auta zastępczego!" << endl;
@@ -290,6 +294,30 @@ void wydanie_auta_zastepczego() {
     }
     else {
         cout << "Logowanie błędne" << endl;
+    }
+}
+
+void zwrot_auta_zastepczego() {
+    cout << "Podaj kod autoryzacyjny: ";
+    int kod;
+    cin >> kod;
+    bool wynik_logowania = Logowanie(kod);
+    if (wynik_logowania == true) {
+        cout << "Podaj numer zamówienia: ";
+        Pojazd_zamienny zamiennik = Pojazd_zamienny();
+        cout << "Podaj kod klienta: ";
+        int kodklienta;
+        cin >> kodklienta;
+        bool wynik = zamiennik.oddaj(kodklienta);
+        if (wynik == true) {
+            cout << "Auto zostało zwrócone!" << endl;
+        }
+        else {
+            cout << "Już do takiego zamówienia nie ma przypisanego auta" << endl;
+        }
+    }
+    else {
+        cout << "Logowanie błędne!" << endl;
     }
 }
 
@@ -321,11 +349,14 @@ void tryb_pracownika() {
         break;
     case 3:
         cout << "Wydanie auta zastępczego" << endl;
+        wydanie_auta_zastepczego();
     case 4:
         cout << "Odbiór auta zastępczego" << endl;
+        zwrot_auta_zastepczego();
         break;
     case 5:
         cout << "Powrót do menu głównego" << endl;
+        
         break;
     default:
         cout << "Nie ma takiej opcji! Kończymy" << endl;
@@ -355,15 +386,9 @@ void tryb_klienta() {
     cout << "                                                           " << endl;
     cout << "                                                           " << endl;
 }
-int main()
-{
-    setlocale(LC_CTYPE, "Polish"); //DODANIE POLSKICH ZNAKÓW DO KONSOLI
 
-    //UTWORZENIE 3 PODSTAWOWYCH POJAZDÓW ZAMIENNYCH
-    Pojazd_zamienny pojazd1("Audi", "A6", "KRK1234", 2018, "AXDWCEWCWEIU324213", "2021-02-20", true, "", "", 0, 0, 0, "Piękny i dynamiczny", 250);
-    Pojazd_zamienny pojazd2("BMW", "X6", "KR7JT6", 2016, "NDSLCBWCHEBLC", "2021-03-12", true, "", "", 0, 0, 0, "Przestronny rodzinny SUV", 250);
-    Pojazd_zamienny pojazd3("Ford", "Mustang", "ST899T", 2020, "DN32U974DN4IU2R", "2020-01-19", true, "", "", 0, 0, 0, "Szybkie sportowe auto", 250);
 
+void menu_glowne() {
 
 
     cout << "" << endl;
@@ -407,5 +432,18 @@ int main()
         break;
     }
 
+}
+
+int main()
+{
+    setlocale(LC_CTYPE, "Polish"); //DODANIE POLSKICH ZNAKÓW DO KONSOLI
+
+    //UTWORZENIE 3 PODSTAWOWYCH POJAZDÓW ZAMIENNYCH
+    //Pojazd_zamienny pojazd1("Audi", "A6", "KRK1234", 2018, "AXDWCEWCWEIU324213", "2021-02-20", true, "", "", 0, 0, 0, "Piękny i dynamiczny", 250);
+    //Pojazd_zamienny pojazd2("BMW", "X6", "KR7JT6", 2016, "NDSLCBWCHEBLC", "2021-03-12", true, "", "", 0, 0, 0, "Przestronny rodzinny SUV", 250);
+    //Pojazd_zamienny pojazd3("Ford", "Mustang", "ST899T", 2020, "DN32U974DN4IU2R", "2020-01-19", true, "", "", 0, 0, 0, "Szybkie sportowe auto", 250);
+
+    //ODPALENIE MENU GŁÓWNEGO
+    menu_glowne();
 }
 
