@@ -33,6 +33,14 @@ public:
         this->nr_telefonu = nr_telefonu;
         this->numer_rezerwacji = numer_rezerwacji;
     }
+    bool czy_klient_istnieje(int numer) {
+        if (numer_rezerwacji == numer) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 };
 
 class Kierownik {
@@ -96,8 +104,13 @@ public:
     string rodzaj_usługi;
     int numer_uslugi;
 public:
-    void rejestracja_uslugi(string numer_uslugi, string data_oddania_auta, string opis_prac, bool czy_przysluguje_zamienne, bool czy_gotowe, string rodzaj_uslugi) {
-
+    void rejestracja_uslugi(int numer_uslugi, string data_oddania_auta, string opis_prac, bool czy_przysluguje_zamienne, bool czy_gotowe, string rodzaj_uslugi) {
+        this->data_oddania_auta = data_oddania_auta;
+        this->opis_prac = opis_prac;
+        this->czy_przysługuje_zamienne = czy_przysluguje_zamienne;
+        this->czy_gotowe = czy_gotowe;
+        this->rodzaj_usługi = rodzaj_uslugi;
+        this->numer_uslugi = numer_uslugi;
     }
     bool znajdz_usluge(int numer_zlecenia) {
        if (numer_zlecenia == numer_uslugi) {
@@ -123,6 +136,7 @@ public:
     void zmien_status_gotowosci(bool deklarowana_gotowosc) {
         czy_gotowe = deklarowana_gotowosc;
     }
+    
 };
 
 
@@ -390,6 +404,35 @@ void zwrot_auta_zastepczego() {
     }
 }
 
+void oddaj_do_serwisu() {
+    cout << "WITAMY W NASZYM SERWISIE !!" << endl;
+    cout << "Czy jesteś już naszym klientem? [T/N]: ";
+    string isclientchoose;
+    cin >> isclientchoose;
+    if (isclientchoose == "T" || isclientchoose == "t" || isclientchoose == "tak" || isclientchoose == "TAK") {
+        cout << "Podaj swój login: ";
+        int clientlogin;
+        cin >> clientlogin;
+        Klient klient = Klient();
+        bool istnieje = klient.czy_klient_istnieje(clientlogin);
+        if (istnieje == true) {
+            cout << "Witaj kliencie " + clientlogin << endl;
+
+        }
+        else {
+            cout << "Nie mogę znaleźć takiego klienta!" << endl;
+        }
+
+    }
+    else if (isclientchoose == "N" || isclientchoose == "n" || isclientchoose == "nie" || isclientchoose == "NIE") {
+        cout << "Nie jesteś naszym klientem ale chętnie powitamy Cię w naszym gronie!" << endl;
+    }
+    else {
+        cout << "Nie ma takiej możliwości :(" << endl;
+    }
+
+}
+
 int menu_glowne() {
 
 
@@ -467,7 +510,6 @@ void tryb_pracownika() {
     //KONIEC MENU PRACOWNIKA
 }
 
-
 void tryb_kierownika() {
 
     cout << "                                                                              " << endl;
@@ -489,6 +531,27 @@ void tryb_klienta() {
     cout << "   |_| |_|_\\ |_| |___/ |_|\\_\\____|___|___|_|\\_| |_/_/ \\_\\  " << endl;
     cout << "                                                           " << endl;
     cout << "                                                           " << endl;
+    cout << "[1] Oddanie pojazdu do serwisu" << endl;
+    cout << "[2] Sprawdzenie statusu" << endl;
+    cout << "[3] Powrót do menu głównego" << endl;
+    int clientmenuchoose;
+    cout << "Wybierz: ";
+    cin >> clientmenuchoose;
+    switch (clientmenuchoose) {
+    case 1:
+        cout << "Wybrano oddanie pojazdu do serwisu" << endl;
+        oddaj_do_serwisu();
+        break;
+    case 2:
+        cout << "Sprawdźmy status Twojej naprawy" << endl;
+        break;
+    case 3:
+        cout << "Powrót do menu głównego" << endl;
+        system("cls");
+        break;
+    default:
+        cout << "Nie ma takiej opcji! Kończymy" << endl;   
+    }
 }
 
 
@@ -521,6 +584,10 @@ int main()
 
     Część czesc1 = Część();
     czesc1.dodaj_czesc("Filtr powietrza", "Filtr marki Honda do BMW", 203, 1111);
+
+    Usługa usluga1 = Usługa();
+    usluga1.rejestracja_uslugi(1111, "2021-05-26", "Coś mi stuka w lewym kole", true, false, "naprawa");
+
 
 //MENU GŁÓWNE////
     int ilosc = 1;
