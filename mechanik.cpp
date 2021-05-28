@@ -1,7 +1,9 @@
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
+//SZYMON MICHOŃ
 
 class Pracownik {
 public:
@@ -9,7 +11,13 @@ public:
     string nazwisko;
     string nr_telefonu;
     int kod_pracownika;
-   
+public:
+    void utworz_pracownika(string imie, string nazwisko, string nr_telefonu, int kod_pracownika) {
+        this->imie = imie;
+        this->nazwisko = nazwisko;
+        this->nr_telefonu = nr_telefonu;
+        this->kod_pracownika = kod_pracownika;
+    }
 };
 
 class Klient {
@@ -33,6 +41,13 @@ public:
     string nazwisko;
     string nr_telefonu;
     int kod_kierownika;
+public:
+    void utworz_kierownika(string imie, string nazwisko, string nr_telefonu, int kod_kierownika) {
+        this->imie = imie;
+        this->nazwisko = nazwisko;
+        this->nr_telefonu = nr_telefonu;
+        this->kod_kierownika = kod_kierownika;
+    }
 };
 
 bool Logowanie(int kod_pracownika) {
@@ -53,11 +68,19 @@ public:
     int cena;
     int numer_zamowienia;
 public:
-    void dodaj_czesc(string nazwaczesci, string opisczesci, int cenaczesci) {
-        nazwa = nazwaczesci;
-        opis = opisczesci;
-        cena = cenaczesci;
+    void dodaj_czesc(string nazwaczesci, string opisczesci, int cenaczesci, int numer_zamowienia) {
+        this->nazwa = nazwaczesci;
+        this->opis = opisczesci;
+        this->cena = cenaczesci;
+        this->numer_zamowienia = numer_zamowienia;
        
+    }
+    void dodaj_czesc_osobno(string nazwaczesci, string opisczesci, int cenaczesci) {
+        this->nazwa = nazwaczesci;
+        this->opis = opisczesci;
+        this->cena = cenaczesci;
+        
+
     }
     void dodaj_do_zamowienia(int numer_zamowieniaczesci) {
         numer_zamowienia = numer_zamowieniaczesci;
@@ -190,7 +213,17 @@ class Pojazd_klienta {
     string nr_vin;
     string ostatni_przeglad;
     int id_klienta;
+public:
+    void utworzPojazdKlienta(string marka, string model, string nr_rejestracyjny, int rocznik, string nr_vin, string ostatni_przeglad, int id_klienta) {
 
+        this->marka = marka;
+        this->model = model;
+        this->nr_rejestracyjny = nr_rejestracyjny;
+        this->rocznik = rocznik;
+        this->nr_vin = nr_vin;
+        this->ostatni_przeglad = ostatni_przeglad;
+        this->id_klienta = id_klienta;
+    }
 };
 
 
@@ -263,7 +296,7 @@ void zamowienie_czesci() {
         cin >> cena;
         cout << endl;
         Część część = Część();
-        część.dodaj_czesc(nazwa, opis, cena);
+        część.dodaj_czesc_osobno(nazwa, opis, cena);
         cout << "Część została dodana" << endl;
         cout << endl;
         cout << "Czy chcesz dodać część do istniejącego numeru zlecenia? [T/N]" << endl;
@@ -357,6 +390,40 @@ void zwrot_auta_zastepczego() {
     }
 }
 
+int menu_glowne() {
+
+
+    cout << "" << endl;
+    cout << " .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------.  .----------------. " << endl;
+    cout << "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |" << endl;
+    cout << "| | ____    ____ | || |  _________   | || |     ______   | || |  ____  ____  | || |      __      | || | ____  _____  | || |     _____    | || |  ___  ____   | |" << endl;
+    cout << "| ||_   \\  /   _|| || | |_   ___  |  | || |   .' ___  |  | || | |_   ||   _| | || |     /  \\     | || ||_   \\|_   _| | || |    |_   _|   | || | |_  ||_  _|  | |" << endl;
+    cout << "| |  |   \\/   |  | || |   | |_  \\_|  | || |  / .'   \\_|  | || |   | |__| |   | || |    / /\\ \\    | || |  |   \\ | |   | || |      | |     | || |   | |_/ /    | |" << endl;
+    cout << "| |  | |\\  /| |  | || |   |  _|  _   | || |  | |         | || |   |  __  |   | || |   / ____ \\   | || |  | |\\ \\| |   | || |      | |     | || |   |  __'.    | |" << endl;
+    cout << "| | _| |_\\/_| |_ | || |  _| |___/ |  | || |  \\ `.___.'\\  | || |  _| |  | |_  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |     _| |_    | || |  _| |  \\ \\_  | |" << endl;
+    cout << "| ||_____||_____|| || | |_________|  | || |   `._____.'  | || | |____||____| | || ||____|  |____|| || ||_____|\\____| | || |    |_____|   | || | |____||____| | |" << endl;
+    cout << "| |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |" << endl;
+    cout << "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |" << endl;
+    cout << " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' " << endl;
+    cout << "" << endl;
+
+    cout << "						 __      ____   _____ ___ ___ ___  ____  _____ _____   _____          " << endl;
+    cout << "						 \\ \\    / /\\ \\ / / _ )_ _| __| _ \\|_  / |_   _| _ \\ \\ / / _ )  " << endl;
+    cout << "						  \\ \\/\\/ /  \\ V /| _ \\| || _||   / / /    | | |   /\\ V /| _ \\  " << endl;
+    cout << "						   \\_/\\_/    |_| |___/___|___|_|_\\/___|   |_| |_|_\\ |_| |___/     " << endl;
+    cout << "						                                                                      " << endl;
+    cout << endl;
+    cout << "[1] JESTEM KLIENTEM" << endl;
+    cout << "[2] JESTEM PRACOWNIKIEM" << endl;
+    cout << "[3] JESTEM KIEROWNIKIEM" << endl;
+    cout << "[4] CHCĘ JUŻ WYJŚĆ!" << endl;
+    int mainmenuchoose;
+    cout << "Podaj wybór: ";
+    cin >> mainmenuchoose;
+    return mainmenuchoose;
+
+}
+
 void tryb_pracownika() {
     cout << "                                                                                           " << endl;
     cout << "  _____ _____   _____   ___ ___    _   ___ _____      ___  _ ___ _  __   _                 " << endl;
@@ -392,13 +459,14 @@ void tryb_pracownika() {
         break;
     case 5:
         cout << "Powrót do menu głównego" << endl;
-        
+        system("cls");
         break;
     default:
         cout << "Nie ma takiej opcji! Kończymy" << endl;
     }
     //KONIEC MENU PRACOWNIKA
 }
+
 
 void tryb_kierownika() {
 
@@ -424,51 +492,7 @@ void tryb_klienta() {
 }
 
 
-void menu_glowne() {
 
-
-    cout << "" << endl;
-    cout << " .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------.  .----------------. " << endl;
-    cout << "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |" << endl;
-    cout << "| | ____    ____ | || |  _________   | || |     ______   | || |  ____  ____  | || |      __      | || | ____  _____  | || |     _____    | || |  ___  ____   | |" << endl;
-    cout << "| ||_   \\  /   _|| || | |_   ___  |  | || |   .' ___  |  | || | |_   ||   _| | || |     /  \\     | || ||_   \\|_   _| | || |    |_   _|   | || | |_  ||_  _|  | |" << endl;
-    cout << "| |  |   \\/   |  | || |   | |_  \\_|  | || |  / .'   \\_|  | || |   | |__| |   | || |    / /\\ \\    | || |  |   \\ | |   | || |      | |     | || |   | |_/ /    | |" << endl;
-    cout << "| |  | |\\  /| |  | || |   |  _|  _   | || |  | |         | || |   |  __  |   | || |   / ____ \\   | || |  | |\\ \\| |   | || |      | |     | || |   |  __'.    | |" << endl;
-    cout << "| | _| |_\\/_| |_ | || |  _| |___/ |  | || |  \\ `.___.'\\  | || |  _| |  | |_  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |     _| |_    | || |  _| |  \\ \\_  | |" << endl;
-    cout << "| ||_____||_____|| || | |_________|  | || |   `._____.'  | || | |____||____| | || ||____|  |____|| || ||_____|\\____| | || |    |_____|   | || | |____||____| | |" << endl;
-    cout << "| |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |" << endl;
-    cout << "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |" << endl;
-    cout << " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' " << endl;
-    cout << "" << endl;
-
-    cout << "						 __      ____   _____ ___ ___ ___  ____  _____ _____   _____          " << endl;
-    cout << "						 \\ \\    / /\\ \\ / / _ )_ _| __| _ \\|_  / |_   _| _ \\ \\ / / _ )  " << endl;
-    cout << "						  \\ \\/\\/ /  \\ V /| _ \\| || _||   / / /    | | |   /\\ V /| _ \\  " << endl;
-    cout << "						   \\_/\\_/    |_| |___/___|___|_|_\\/___|   |_| |_|_\\ |_| |___/     " << endl;
-    cout << "						                                                                      " << endl;
-    cout << endl;
-    cout << "[1] JESTEM KLIENTEM" << endl;
-    cout << "[2] JESTEM PRACOWNIKIEM" << endl;
-    cout << "[3] JESTEM KIEROWNIKIEM" << endl;
-    int mainmenuchoose;
-    cout << "Podaj wybór: ";
-    cin >> mainmenuchoose;
-    switch (mainmenuchoose) {
-    case 1:
-        tryb_klienta();
-        break;
-    case 2:
-        tryb_pracownika();
-        break;
-    case 3:
-        tryb_kierownika();
-        break;
-    default:
-        cout << "Nie ma takiej opcji!!!" << endl;
-        break;
-    }
-
-}
 
 int main()
 {
@@ -483,21 +507,43 @@ int main()
     pojazd3.utworzPojazdZamienny("Ford", "Mustang", "ST899T", 2020, "DN32U974DN4IU2R", "2020-01-19", true, "", "", 0, 0, 0, "Szybkie sportowe auto", 250);
 
     //UTWORZENIE PRZYKŁADOWYCH OBIEKTÓW KLAS
-
-    //jeden sposób na pracownika, bez tworzenia niczego w klasie
-    Pracownik pracownik1 = Pracownik();
-    pracownik1.imie = "Jan";
-    pracownik1.nazwisko = "Robotnik";
-    pracownik1.nr_telefonu = "666 555 444";
-    pracownik1.kod_pracownika = 1234;
-
-    //drugi sposób dzięki któremu będzie wam łatwiej stworzyć, poprzez funkcję dodania
     Klient klient1 = Klient();
-    klient1.utworz_klienta("Janek", "Kimono", "654 544 332",1111);
+    klient1.utworz_klienta("Janek", "Kliencki", "654 544 332",1111);
 
+    Pracownik pracownik1 = Pracownik();
+    pracownik1.utworz_pracownika("Jan", "Robotniczy", "666 555 444", 1234);
 
+    Kierownik kierownik1 = Kierownik();
+    kierownik1.utworz_kierownika("Zbigniew", "Kierowniczy", "434 222 111", 6666);
 
-    //ODPALENIE MENU GŁÓWNEGO
-    menu_glowne();
+    Pojazd_klienta pojazdklienta1 = Pojazd_klienta();
+    pojazdklienta1.utworzPojazdKlienta("Volkswagen", "Polo", "KR4321R", 2006, "WF2W23F3490JDFW", "2012-05-21", 1111);
+
+    Część czesc1 = Część();
+    czesc1.dodaj_czesc("Filtr powietrza", "Filtr marki Honda do BMW", 203, 1111);
+
+//MENU GŁÓWNE////
+    int ilosc = 1;
+    do {
+        int mainmenuchoose = menu_glowne();
+        switch (mainmenuchoose) {
+        case 1:
+            tryb_klienta();
+            break;
+        case 2:
+            tryb_pracownika();
+            break;
+        case 3:
+            tryb_kierownika();
+            break;
+        case 4:
+            ilosc = 3;
+            cout << "Kończymy program" << endl;
+            break;
+        default:
+            cout << "Nie ma takiej opcji!!!" << endl;
+            break;
+        }
+    } while (ilosc <2 );
 }
 
