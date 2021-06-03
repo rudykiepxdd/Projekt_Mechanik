@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <list>
 
 using namespace std;
 
@@ -139,6 +140,56 @@ public:
     
 };
 
+//Testowe sprawdzenie działania kodu na tablicach obiektów
+const int rozmiarTablicyUslug = 2;
+Usługa tablicaUslug[rozmiarTablicyUslug] = {
+    {"2021-05-26", "Naprawa 1111", true, false, "naprawa",1111},
+    {"2021-05-26", "Naprawa 2222", true, false, "naprawa",2222}
+};
+bool findUsluga(int numer) {
+    int vartosc=0;
+    for (int i=0; i < rozmiarTablicyUslug; i++) {
+        if (tablicaUslug[i].numer_uslugi == numer) {
+            vartosc = vartosc+1;
+        }
+    
+    }
+    if (vartosc > 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+void dodajOpisDoUslugi(int numer, string opisywanie) {
+    for (int i = 0; i < rozmiarTablicyUslug; i++) {
+        if (tablicaUslug[i].numer_uslugi == numer) {
+            tablicaUslug[i].opis_prac = opisywanie;
+        }
+    }
+}
+void zmienStatusGotowosci(int numer) {
+    for (int i = 0; i < rozmiarTablicyUslug; i++) {
+        if (tablicaUslug[i].numer_uslugi == numer) {
+            tablicaUslug[i].czy_gotowe = true;
+        }
+    }
+}
+
+void wypiszUslugi() {
+    cout << "Oto aktualne usługi " << endl;
+    for (int i = 0; i < rozmiarTablicyUslug; i++) {
+        cout << endl;
+        cout << " -----------------------------------------------------------------------------------" << endl;
+        cout << "   Data oddania : " << tablicaUslug[i].data_oddania_auta << endl;
+        cout << "   Opis prac: " << tablicaUslug[i].opis_prac << endl;
+        cout << "   Czy przysługuje zamienne: " << tablicaUslug[i].czy_przysługuje_zamienne << endl;
+        cout << "   Czy gotowe: " << tablicaUslug[i].czy_gotowe << endl;
+        cout << "   Rodzaj usługi: " << tablicaUslug[i].opis_prac << endl;
+        cout << "   Id usługi: " << tablicaUslug[i].numer_uslugi << endl;
+
+    }
+}
 
 class Pojazd_zamienny {
 public:
@@ -251,7 +302,7 @@ void prace_serwisowe() {
         int numer_zlecenia;
         cin >> numer_zlecenia;
         Usługa usługa = Usługa();
-        bool czy_istnieje_usluga = usługa.znajdz_usluge(numer_zlecenia);
+        bool czy_istnieje_usluga = findUsluga(numer_zlecenia);
         if (czy_istnieje_usluga == true) {
             cout << "Rejestruje prace serwisowe do usługi: " + numer_zlecenia << endl;
             cout << "Czy zostały wykonane dodatkowe naprawy? [T/N]" << endl;
@@ -261,7 +312,7 @@ void prace_serwisowe() {
                 cout << "Podaj opis wykonywanych prac: " << endl;
                 string opis_prac_zlecenie;
                 cin >> opis_prac_zlecenie;
-                usługa.dodaj_opis(opis_prac_zlecenie);
+                dodajOpisDoUslugi(numer_zlecenia,opis_prac_zlecenie);
                 cout << "Opis został dodany do zlecenia" << endl;
             }else {
                 cout << "Nie dodajemy nowych prac" << endl;
@@ -271,7 +322,7 @@ void prace_serwisowe() {
             cin >> ask_gotowe;
             if (ask_gotowe == "T" || ask_gotowe == "t" || ask_gotowe == "tak" || ask_gotowe == "TAK") {
                 bool zmianagotowosci = true;
-                usługa.zmien_status_gotowosci(zmianagotowosci);
+                zmienStatusGotowosci(numer_zlecenia);
                 cout << "Auto gotowe, zadzwoń do klienta aby mógł je odebrać" << endl;
 
             }
@@ -519,6 +570,18 @@ void tryb_kierownika() {
     cout << "   |_| |_|_\\ |_| |___/ |_|\\_\\___|___|_|_\\\\___/ \\_/\\_/ |_|\\_|___|_|\\_\\/_/ \\_\\  " << endl;
     cout << "                                                                              " << endl;
     cout << "                                                                              " << endl;
+    cout << "[1] Pokaż aktualnie prowadzone prace" << endl;
+    int wybor;
+    cout << "Podaj wybor: ";
+    cin >> wybor;
+    switch (wybor) {
+    case 1:
+        wypiszUslugi();
+        break;
+    default:
+        cout << "Nie ma takiej opcji" << endl;
+
+    }
 
 }
 
@@ -585,8 +648,10 @@ int main()
     Część czesc1 = Część();
     czesc1.dodaj_czesc("Filtr powietrza", "Filtr marki Honda do BMW", 203, 1111);
 
-    Usługa usluga1 = Usługa();
-    usluga1.rejestracja_uslugi(1111, "2021-05-26", "Coś mi stuka w lewym kole", true, false, "naprawa");
+
+    
+
+    
 
 
 //MENU GŁÓWNE////
