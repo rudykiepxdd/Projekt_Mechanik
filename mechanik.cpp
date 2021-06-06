@@ -31,6 +31,7 @@ public:
     int numer_rezerwacji;
 public:
     void wypisanie_Klienta() {
+        cout << "------------------------------------------------------" << endl;
         cout << "Imie: " << imie << endl;
         cout << "Nazwisko: " << nazwisko << endl;
         cout << "Numer telefonu: " << nr_telefonu << endl;
@@ -87,6 +88,7 @@ public:
     int numer_zamowienia;
 public:
     void wypisz_czesc() {
+        cout << "------------------------------------------------------" << endl;
         cout << "Nazwa: " << nazwa << endl;
         cout << "Opis: " << opis << endl;
         cout << "Cena: " << cena << endl;
@@ -111,7 +113,6 @@ public:
     }
 };
 
-
 class Usługa {
 public:
     string data_oddania_auta;
@@ -124,6 +125,9 @@ public:
     int zwroc_numer_uslugi() {
         return numer_uslugi;
     }
+    bool zwroc_czy_przysluguje_zamienne() {
+        return czy_przysługuje_zamienne;
+    }
     void dodaj_opis_do_uslugi(string opisik) {
         opis_prac = opisik;
     }
@@ -131,37 +135,20 @@ public:
         czy_gotowe = true;
     }
     void wypisz_usluge() {
+        cout << "------------------------------------------------------" << endl;
         cout << "Data oddania auta: " << data_oddania_auta << endl;
         cout << "Opis prac: " << opis_prac << endl;
         cout << "Czy przysługuje zamienne: " << czy_przysługuje_zamienne << endl;
-        cout << "Czy gotowe: " << czy_gotowe << endl;
+        cout << "Czy gotowe: ";
+        if (czy_gotowe == true) {
+            cout << "TAK" << endl;
+        }
+        else {
+            cout << "NIE" << endl;
+        }
+        
         cout << "Rodzaj usługi: " << rodzaj_usługi << endl;
         cout << "Numer usługi: " << numer_uslugi << endl;
-    }
-    void rejestracja_uslugi(int numer_uslugi, string data_oddania_auta, string opis_prac, bool czy_przysluguje_zamienne, bool czy_gotowe, string rodzaj_uslugi) {
-        this->data_oddania_auta = data_oddania_auta;
-        this->opis_prac = opis_prac;
-        this->czy_przysługuje_zamienne = czy_przysluguje_zamienne;
-        this->czy_gotowe = czy_gotowe;
-        this->rodzaj_usługi = rodzaj_uslugi;
-        this->numer_uslugi = numer_uslugi;
-    }
-    bool znajdz_usluge(int numer_zlecenia) {
-        if (numer_zlecenia == numer_uslugi) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    bool czy_przysluguje_zamienne(int numer_usl_zamiennej) {
-        if (numer_usl_zamiennej == numer_uslugi && czy_przysługuje_zamienne == true) {
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     void dodaj_opis(string dodawany_opis) {
@@ -190,27 +177,24 @@ public:
     string opis;
     int cena_za_dobe;
 public:
-    void utworzPojazdZamienny(string marka, string model, string nr_rejestracyjny, int rocznik, string nr_vin, string ostatni_przeglad, bool czy_wolny, string data_od, string data_do, int przebieg_początkowy, int przebieg_zwrócony, int id_klienta, string opis, int cena_za_dobe) {
-
-        this->marka = marka;
-        this->model = model;
-        this->nr_rejestracyjny = nr_rejestracyjny;
-        this->rocznik = rocznik;
-        this->nr_vin = nr_vin;
-        this->ostatni_przeglad = ostatni_przeglad;
-        this->czy_wolny = czy_wolny;
-        this->data_od = data_od;
-        this->data_do = data_do;
-        this->przebieg_początkowy = przebieg_początkowy;
-        this->przebieg_zwrócony = przebieg_zwrócony;
-        this->id_klienta = id_klienta;
-        this->opis = opis;
-        this->cena_za_dobe = cena_za_dobe;
+    int zwroc_id_klienta() {
+        return id_klienta;
+    }
+    void zajmij_auto(int przebieg, string data){
+        przebieg_początkowy = przebieg;
+        data_od = data;
+        czy_wolny = false;
+    }
+    void zwrot_auto(int przebieg, string data) {
+        przebieg_zwrócony = przebieg;
+        data_do = data;
+        czy_wolny = true;
     }
     int ile_przejechano(int przebieg_początkowy, int przebieg_zwrócony) {
         return przebieg_zwrócony - przebieg_początkowy;
     }
     void wypisz_pojazd_zamienny() {
+        cout << "------------------------------------------------------" << endl;
         cout << "Marka tego auta zastępczego to: " << marka << endl;
         cout << "Model tego auta zastępczego to: " << model << endl;
         cout << "Numer rejestracyjny tego auta zastępczego to: " << nr_rejestracyjny << endl;
@@ -226,30 +210,10 @@ public:
         cout << "Opis tego auta zastępczego to: " << opis << endl;
         cout << "Cena za dobę tego auta zastępczego to: " << cena_za_dobe << endl;
     }
-    bool wypozycz(int idklienta) {
-        if (idklienta == id_klienta && czy_wolny == true) {
-            czy_wolny = false;
-            return true;
-        }
-        else {
 
-            return false;
-        }
-    }
-    bool oddaj(int idklienta) {
-        if (idklienta == id_klienta && czy_wolny == false) {
-            czy_wolny = true;
-            return true;
-        }
-        else {
-
-            return false;
-        }
-    }
-    int cena_za_wypozyczenie() {
+    void cena_za_wypozyczenie() {
 
     }
-
 };
 
 class Pojazd_klienta {
@@ -345,6 +309,7 @@ void zmien_gotowosc(int podawanynumer) {
         int zmienna = (*i)->zwroc_numer_uslugi();
         if (zmienna == podawanynumer) {
             (*i)->zmien_gotowosc();
+            var = var + 1;
         }
     }
     if (var == 0) {
@@ -363,7 +328,54 @@ void wypisanie_pojazdow_zamiennych() {
     }
 }
 
+bool czy_przysluguje_zamienne(int podawanynumer) {
+    int var = 0;
+    for (list<Usługa*>::iterator i = usługaLista.begin(); i != usługaLista.end(); i++) {
+        int zmienna = (*i)->zwroc_numer_uslugi();
+        if (zmienna == podawanynumer) {
+            bool czy = (*i)->zwroc_czy_przysluguje_zamienne();
+            if (czy == true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+            var = var + 1;
+        }
+    }
+    if (var == 0) {
+        cout << "Nie znaleziono takiej usługi" << endl;
+        return false;
+    }
+}
+void wypozycz(int podawanynumer, string data, int przebieg) {
+    int var = 0;
+    for (list<Pojazd_zamienny*>::iterator i = pojazdZamiennyLista.begin(); i != pojazdZamiennyLista.end(); i++) {
+        int zmienna = (*i)->zwroc_id_klienta();
+        if (zmienna == podawanynumer) {
+            (*i)->zajmij_auto(przebieg,data);
+            var = var + 1;
+        }
+    }
+    if (var == 0) {
+        cout << "Nie znaleziono takiej usługi" << endl;
 
+    }
+}
+void zwroc(int podawanynumer, string data, int przebieg) {
+    int var = 0;
+    for (list<Pojazd_zamienny*>::iterator i = pojazdZamiennyLista.begin(); i != pojazdZamiennyLista.end(); i++) {
+        int zmienna = (*i)->zwroc_id_klienta();
+        if (zmienna == podawanynumer) {
+            (*i)->zwrot_auto(przebieg, data);
+            var = var + 1;
+        }
+    }
+    if (var == 0) {
+        cout << "Nie znaleziono takiej usługi" << endl;
+
+    }
+}
 
 void logowanie_klienta(int login) {
     //int vartosc = 0;
@@ -469,27 +481,17 @@ void wydanie_auta_zastepczego() {
         cout << "Podaj numer zamówienia: ";
         int numer_zamowienia_zastepcze;
         cin >> numer_zamowienia_zastepcze;
-        Usługa usługa = Usługa();
 
-        bool czy_sie_nalezy = usługa.czy_przysluguje_zamienne(numer_zamowienia_zastepcze);
+        bool czy_sie_nalezy  = czy_przysluguje_zamienne(numer_zamowienia_zastepcze);
         if (czy_sie_nalezy == true) {
             cout << "Auto zastępcze do tej usługi jest przypisane poprawnie" << endl;
             cout << "Wpisz przebieg początkowy: ";
             int przebieg_poczatkowy;
             cin >> przebieg_poczatkowy;
             cout << "Wpisz datę wydania auta: ";
-            int data_wydania;
+            string data_wydania;
             cin >> data_wydania;
-            Pojazd_zamienny zamiennik = Pojazd_zamienny();
-            bool wypozyczenie = zamiennik.wypozycz(numer_zamowienia_zastepcze);
-
-            if (wypozyczenie == true) {
-                cout << "Auto zostało zaktualizowane jako wynajęte z przypisaną datą wydania auta" << endl;
-                cout << "Wydaj kluczki klientowi" << endl;
-            }
-            else {
-                cout << "Nie udało się wypożyczyć auta, może jest ono już wypożyczone?" << endl;
-            }
+            wypozycz(numer_zamowienia_zastepcze,data_wydania,przebieg_poczatkowy);
 
         }
         else {
@@ -507,18 +509,18 @@ void zwrot_auta_zastepczego() {
     cin >> kod;
     bool wynik_logowania = Logowanie(kod);
     if (wynik_logowania == true) {
-        cout << "Podaj numer zamówienia: ";
-        Pojazd_zamienny zamiennik = Pojazd_zamienny();
         cout << "Podaj kod klienta: ";
         int kodklienta;
         cin >> kodklienta;
-        bool wynik = zamiennik.oddaj(kodklienta);
-        if (wynik == true) {
-            cout << "Auto zostało zwrócone!" << endl;
-        }
-        else {
-            cout << "Już do takiego zamówienia nie ma przypisanego auta" << endl;
-        }
+        cout << "Podaj date zwrotu: ";
+        string data;
+        cin >> data;
+        cout << "Podaj zwrócony przebieg: ";
+        int przebieg;
+        cin >> przebieg;
+        zwroc(kodklienta,data,przebieg);
+        
+
     }
     else {
         cout << "Logowanie błędne!" << endl;
