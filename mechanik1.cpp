@@ -71,16 +71,6 @@ public:
     }
 };
 
-bool Logowanie(int kod_pracownika) {
-    if (kod_pracownika == 1234) {
-        cout << "Kod poprawny" << endl;
-        return true;
-    }
-    else {
-        cout << "Kod niepoprawny" << endl;
-        return false;
-    }
-}
 
 bool Logowanie_kierownika(int kod_kierownika) {
     if (kod_kierownika == 997) {
@@ -338,7 +328,6 @@ void wypisanie_pojazdow_zamiennych() {
         (*i)->wypisz_pojazd_zamienny();
     }
 }
-<<<<<<< Updated upstream
 bool czy_przysluguje_zamienne(int podawanynumer) {
     int var = 0;
     for (list<Usługa*>::iterator i = usługaLista.begin(); i != usługaLista.end(); i++) {
@@ -359,9 +348,6 @@ bool czy_przysluguje_zamienne(int podawanynumer) {
         return false;
     }
 }
-=======
-
->>>>>>> Stashed changes
 void wypozycz(int podawanynumer, string data, int przebieg) {
     int var = 0;
     for (list<Pojazd_zamienny*>::iterator i = pojazdZamiennyLista.begin(); i != pojazdZamiennyLista.end(); i++) {
@@ -401,17 +387,18 @@ void wypisanie_pojazdow_klientow() {
     }
 }
 
-<<<<<<< Updated upstream
 void utworz_pracownika(string imie, string nazwisko, string numer_telefonu, int kod_pracownika) {
     Pracownik* temp = new Pracownik{ imie, nazwisko, numer_telefonu, kod_pracownika };
     listaPracownikow.push_back(temp);
 }
-=======
-
->>>>>>> Stashed changes
 void wypisz_pracownikow() {
     for (list<Pracownik*>::iterator i = listaPracownikow.begin(); i != listaPracownikow.end(); i++) {
         (*i)->wypisz_pracownika();
+    }
+}
+void wypisz_czesci(){
+    for (list<czescLista*>::iterator i = czescLista.begin(); i != czescLista.end(); i++ ){
+        (*i)->wypisz_czesci();
     }
 }
 
@@ -419,22 +406,9 @@ int cena_za_wypozyczenie(int zadobe, int ilosc_dni) {
     return zadobe * ilosc_dni;
 }
 
-<<<<<<< Updated upstream
 void logowanie_klienta(int login) {
-    //int vartosc = 0;
-    //for (int i = 0; i < rozmiarTablicyKlientow; i++) {
-    //    if (tablicaKlientow[i].numer_rezerwacji == login) {
-    //        cout << "Witaj " << tablicaKlientow[i].imie << endl;
-    //        vartosc = vartosc + 1;
-    //    }
-    //}
-    //if (vartosc == 0) {
-    //    cout << "Nie znaleziono takiego klienta" << endl;
-    //}
-}
-=======
 
->>>>>>> Stashed changes
+}
 
 
 void dodaj_pojazd_zamienny() {
@@ -482,6 +456,20 @@ void dodaj_pojazd_zamienny() {
         
     }
 }
+void wypisz_pojazd_zamienny() {
+    cout << "Podaj kod kierownika: ";
+    int kod;
+    cin >> kod;
+    bool wynik_logowania = Logowanie_kierownika(kod);
+    if (wynik_logowania == true) {
+
+
+
+    }
+    else {
+        cout << "Podałeś nieprawidłowy kod" << endl;
+        
+    }
 
 void prace_serwisowe() {
     cout << "Podaj kod autoryzacyjny: ";
@@ -808,9 +796,11 @@ int main()
     //UTWORZENIE PRZYKŁADOWYCH OBIEKTÓW KLAS
    utworz_klienta("Jan", "Heisenberg", "666 555 444", 1111);
    utworz_klienta("Andrzej", "Kliencki", "555 344 123", 1232);
+   utworz_klienta("Remi", "Remikowski", "123 747 321", 1357);
 
    utworz_usluge("2021-05-26", "Naprawa 1111", true, false, "naprawa", 1111);
    utworz_usluge("2021-05-26", "Naprawa 2222", true, false, "naprawa", 2222);
+   utworz_usluge("2021-05-26", "Naprawa 3333", true, false, "naprawa", 3333);
 
    utworz_pojazd_zamienny("Audi", "A6", "KRK1234", 2018, "AXDWCEWCWEIU324213", "2021-02-20", true, "", "", 0, 0, 0, "Piękny i dynamiczny", 250);
    utworz_pojazd_zamienny("BMW", "X6", "KR7JT6", 2016, "NDSLCBWCHEBLC", "2021-03-12", true, "", "", 0, 0, 0, "Przestronny rodzinny SUV", 250);
