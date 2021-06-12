@@ -50,13 +50,7 @@ public:
     string nr_telefonu;
     int kod_kierownika;
 public:
-    void utworz_kierownika(string imie, string nazwisko, string nr_telefonu, int kod_kierownika) {
-        this->imie = imie;
-        this->nazwisko = nazwisko;
-        this->nr_telefonu = nr_telefonu;
-        this->kod_kierownika = kod_kierownika;
-    }
-};
+ 
 
 bool Logowanie(int kod_pracownika) {
     if (kod_pracownika == 1234) {
@@ -83,13 +77,7 @@ public:
         this->numer_zamowienia = numer_zamowienia;
        
     }
-    void dodaj_czesc_osobno(string nazwaczesci, string opisczesci, int cenaczesci) {
-        this->nazwa = nazwaczesci;
-        this->opis = opisczesci;
-        this->cena = cenaczesci;
-        
-
-    }
+   
     void dodaj_do_zamowienia(int numer_zamowieniaczesci) {
         numer_zamowienia = numer_zamowieniaczesci;
     }
