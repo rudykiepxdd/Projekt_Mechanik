@@ -338,6 +338,7 @@ void wypisanie_pojazdow_zamiennych() {
         (*i)->wypisz_pojazd_zamienny();
     }
 }
+<<<<<<< Updated upstream
 bool czy_przysluguje_zamienne(int podawanynumer) {
     int var = 0;
     for (list<Usługa*>::iterator i = usługaLista.begin(); i != usługaLista.end(); i++) {
@@ -358,6 +359,9 @@ bool czy_przysluguje_zamienne(int podawanynumer) {
         return false;
     }
 }
+=======
+
+>>>>>>> Stashed changes
 void wypozycz(int podawanynumer, string data, int przebieg) {
     int var = 0;
     for (list<Pojazd_zamienny*>::iterator i = pojazdZamiennyLista.begin(); i != pojazdZamiennyLista.end(); i++) {
@@ -397,10 +401,14 @@ void wypisanie_pojazdow_klientow() {
     }
 }
 
+<<<<<<< Updated upstream
 void utworz_pracownika(string imie, string nazwisko, string numer_telefonu, int kod_pracownika) {
     Pracownik* temp = new Pracownik{ imie, nazwisko, numer_telefonu, kod_pracownika };
     listaPracownikow.push_back(temp);
 }
+=======
+
+>>>>>>> Stashed changes
 void wypisz_pracownikow() {
     for (list<Pracownik*>::iterator i = listaPracownikow.begin(); i != listaPracownikow.end(); i++) {
         (*i)->wypisz_pracownika();
@@ -411,6 +419,7 @@ int cena_za_wypozyczenie(int zadobe, int ilosc_dni) {
     return zadobe * ilosc_dni;
 }
 
+<<<<<<< Updated upstream
 void logowanie_klienta(int login) {
     //int vartosc = 0;
     //for (int i = 0; i < rozmiarTablicyKlientow; i++) {
@@ -423,6 +432,9 @@ void logowanie_klienta(int login) {
     //    cout << "Nie znaleziono takiego klienta" << endl;
     //}
 }
+=======
+
+>>>>>>> Stashed changes
 
 
 void dodaj_pojazd_zamienny() {
