@@ -15,11 +15,12 @@ public:
     string nr_telefonu;
     int kod_pracownika;
 public:
-    void utworz_pracownika(string imie, string nazwisko, string nr_telefonu, int kod_pracownika) {
-        this->imie = imie;
-        this->nazwisko = nazwisko;
-        this->nr_telefonu = nr_telefonu;
-        this->kod_pracownika = kod_pracownika;
+    void wypisz_pracownika() {
+        cout << "-----------------------------------" << endl;
+        cout << "Imie: " << imie << endl;
+        cout << "Nazwisko: " << nazwisko << endl;
+        cout << "Numer telefonu: " << nr_telefonu << endl;
+        cout << "Kod pracownika: " << kod_pracownika << endl;
     }
 };
 
@@ -71,6 +72,17 @@ public:
 
 bool Logowanie(int kod_pracownika) {
     if (kod_pracownika == 1234) {
+        cout << "Kod poprawny" << endl;
+        return true;
+    }
+    else {
+        cout << "Kod niepoprawny" << endl;
+        return false;
+    }
+}
+
+bool Logowanie_kierownika(int kod_kierownika) {
+    if (kod_kierownika == 997) {
         cout << "Kod poprawny" << endl;
         return true;
     }
@@ -211,12 +223,10 @@ public:
         cout << "Cena za dobę tego auta zastępczego to: " << cena_za_dobe << endl;
     }
 
-    void cena_za_wypozyczenie() {
-
-    }
 };
 
 class Pojazd_klienta {
+public:
     string marka;
     string model;
     string nr_rejestracyjny;
@@ -225,23 +235,26 @@ class Pojazd_klienta {
     string ostatni_przeglad;
     int id_klienta;
 public:
-    void utworzPojazdKlienta(string marka, string model, string nr_rejestracyjny, int rocznik, string nr_vin, string ostatni_przeglad, int id_klienta) {
-
-        this->marka = marka;
-        this->model = model;
-        this->nr_rejestracyjny = nr_rejestracyjny;
-        this->rocznik = rocznik;
-        this->nr_vin = nr_vin;
-        this->ostatni_przeglad = ostatni_przeglad;
-        this->id_klienta = id_klienta;
+    void wypiszPojazdKlienta(){
+        cout << "-------------------------------------------------" << endl;
+        cout << "Marka: " << marka << endl;
+        cout << "Model: " << model << endl;
+        cout << "Numer rejestracyjny: " << nr_rejestracyjny << endl;
+        cout << "Rocznik: " << rocznik << endl;
+        cout << "Numer VIN: " << nr_vin << endl;
+        cout << "Ostatni przegląd: " << ostatni_przeglad;
+        cout << "Id klienta: " << id_klienta << endl;
     }
 };
 
 
 list <Klient*> lista;
 list <Pojazd_zamienny*> pojazdZamiennyLista;
+list <Pojazd_klienta*> pojazKlientaLista;
 list <Usługa*> usługaLista;
 list <Część*> czescLista;
+list <Pracownik*> listaPracownikow;
+
 
 void utworz_klienta(string imionko, string nazwisko, string num, int numme) {
     Klient* temp = new Klient{ imionko,nazwisko,num,numme };
@@ -272,7 +285,6 @@ void wypisanie_uslug() {
         (*i)->wypisz_usluge();
     }
 }
-
 bool znajdz_usluge(int podawanynumer) {
     int var = 0;
     for (list<Usługa*>::iterator i = usługaLista.begin(); i != usługaLista.end(); i++) {
@@ -288,7 +300,6 @@ bool znajdz_usluge(int podawanynumer) {
         return false;
     }
 }
-
 void dodaj_opis_do_uslugi(int podawanynumer, string opis) {
     int var = 0;
     for (list<Usługa*>::iterator i = usługaLista.begin(); i != usługaLista.end(); i++) {
@@ -302,7 +313,6 @@ void dodaj_opis_do_uslugi(int podawanynumer, string opis) {
         
     }
 }
-
 void zmien_gotowosc(int podawanynumer) {
     int var = 0;
     for (list<Usługa*>::iterator i = usługaLista.begin(); i != usługaLista.end(); i++) {
@@ -327,7 +337,6 @@ void wypisanie_pojazdow_zamiennych() {
         (*i)->wypisz_pojazd_zamienny();
     }
 }
-
 bool czy_przysluguje_zamienne(int podawanynumer) {
     int var = 0;
     for (list<Usługa*>::iterator i = usługaLista.begin(); i != usługaLista.end(); i++) {
@@ -377,6 +386,30 @@ void zwroc(int podawanynumer, string data, int przebieg) {
     }
 }
 
+void utworz_pojazd_klienta(string marka, string model, string nr_rejestracyjny, int rocznik, string nr_vin, string ostatni_przeglad, int id_klienta) {
+    Pojazd_klienta* temp = new Pojazd_klienta{ marka, model, nr_rejestracyjny, rocznik, nr_vin, ostatni_przeglad, id_klienta };
+    pojazKlientaLista.push_back(temp);
+}
+void wypisanie_pojazdow_klientow() {
+    for (list<Pojazd_klienta*>::iterator i = pojazKlientaLista.begin(); i != pojazKlientaLista.end(); i++) {
+        (*i)->wypiszPojazdKlienta();
+    }
+}
+
+void utworz_pracownika(string imie, string nazwisko, string numer_telefonu, int kod_pracownika) {
+    Pracownik* temp = new Pracownik{ imie, nazwisko, numer_telefonu, kod_pracownika };
+    listaPracownikow.push_back(temp);
+}
+void wypisz_pracownikow() {
+    for (list<Pracownik*>::iterator i = listaPracownikow.begin(); i != listaPracownikow.end(); i++) {
+        (*i)->wypisz_pracownika();
+    }
+}
+
+int cena_za_wypozyczenie(int zadobe, int ilosc_dni) {
+    return zadobe * ilosc_dni;
+}
+
 void logowanie_klienta(int login) {
     //int vartosc = 0;
     //for (int i = 0; i < rozmiarTablicyKlientow; i++) {
@@ -390,6 +423,52 @@ void logowanie_klienta(int login) {
     //}
 }
 
+
+void dodaj_pojazd_zamienny() {
+    cout << "Podaj kod kierownika: ";
+    int kod;
+    cin >> kod;
+    bool wynik_logowania = Logowanie_kierownika(kod);
+    if (wynik_logowania == true) {
+        string marka;
+        string model;
+        string nr_rejestracyjny;
+        int rocznik;
+        string nr_vin;
+        string ostatni_przeglad;
+        bool czy_wolny = true;
+        string data_od="";
+        string data_do="";
+        int przebieg_początkowy;
+        int przebieg_zwrócony=0;
+        int id_klienta=0;
+        string opis;
+        int cena_za_dobe;
+        cout << "Podaj marke: ";
+        cin >> marka;
+        cout << "Podaj model: ";
+        cin >> model;
+        cout << "Podaj numer rejestracyjny: ";
+        cin >> nr_rejestracyjny;
+        cout << "Podaj rocznik: ";
+        cin >> rocznik;
+        cout << "Podaj numer vin: ";
+        cin >> nr_vin;
+        cout << "Podaj ostatni przeglad: ";
+        cin >> ostatni_przeglad;
+        cout << "Podaj przebieg: ";
+        cin >> przebieg_początkowy;
+        cout << "Podaj opis: ";
+        cin >> opis;
+        cout << "Podaj cena za dobe: ";
+        cin >> cena_za_dobe;
+        utworz_pojazd_zamienny(marka, model, nr_rejestracyjny, rocznik, nr_vin, ostatni_przeglad, czy_wolny, data_od, data_do, przebieg_początkowy, przebieg_zwrócony, id_klienta, opis, cena_za_dobe);
+    }
+    else {
+        cout << "Podałeś nieprawidłowy kod" << endl;
+        
+    }
+}
 
 void prace_serwisowe() {
     cout << "Podaj kod autoryzacyjny: ";
@@ -638,6 +717,10 @@ void tryb_kierownika() {
     cout << "[1] Pokaż aktualnie prowadzone prace" << endl;
     cout << "[2] Pokaż wszystkich klientów " << endl;
     cout << "[3] Pokaż pojazdy zamienne " << endl;
+    cout << "[4] Pokaż zamówione części" << endl;
+    cout << "[5] Pokaż pracowników " << endl;
+    cout << "[6] Dodaj pojazd zamienny" << endl;
+    cout << "[7] Wróć do menu głównego " << endl;
     int wybor;
     cout << "Podaj wybor: ";
     cin >> wybor;
@@ -650,6 +733,18 @@ void tryb_kierownika() {
         break;
     case 3:
         wypisanie_pojazdow_zamiennych();
+        break;
+    case 4:
+        wypisanie_czesci();
+        break;
+    case 5:
+        wypisz_pracownikow();
+        break;
+    case 6:
+        dodaj_pojazd_zamienny();
+        break;
+    case 7:
+        system("cls");
         break;
     default:
         cout << "Nie ma takiej opcji" << endl;
