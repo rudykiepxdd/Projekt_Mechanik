@@ -4,6 +4,7 @@
 using namespace std;
 
 //SZYMON MICHOŃ
+//TOMASZ PĘCZEK
 
 class Pracownik {
 public:
