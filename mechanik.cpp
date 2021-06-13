@@ -39,6 +39,9 @@ public:
         cout << "Numer rezerwacji: " << numer_rezerwacji << endl;
 
     }
+    int zwroc_numer() {
+        return numer_rezerwacji;
+    }
     void utworz_klienta(string imie, string nazwisko, string nr_telefonu, int numer_rezerwacji) {
         this->imie = imie;
         this->nazwisko = nazwisko;
@@ -265,7 +268,21 @@ void wypisanie_klientow() {
         (*i)->wypisanie_Klienta();
     }
 }
-
+bool czy_istnieje_klient(int podawanynumer) {
+    int var = 0;
+    for (list<Klient*>::iterator i = lista.begin(); i != lista.end(); i++) {
+        int zmienna = (*i)->zwroc_numer();
+        if (zmienna == podawanynumer) {
+            cout << "Witaj! Poprawnie znaleziono zlecenia klienta: " << podawanynumer << endl;
+            var = var + 1;
+            return true;
+        }
+    }
+    if (var == 0) {
+        cout << "Nie znaleziono takiej usługi" << endl;
+        return false;
+    }
+}
 void utworz_czesc(string nazwa, string opis, int cena, int numer_zamowienia) {
     Część* temp = new Część{ nazwa, opis,cena, numer_zamowienia };
     czescLista.push_back(temp);
@@ -299,6 +316,19 @@ bool znajdz_usluge(int podawanynumer) {
         cout << "Nie znaleziono takiej usługi" << endl;
         return false;
     }
+}
+
+void wypisz_pojedyncza_usluge(int podawanynumer) {
+
+    for (list<Usługa*>::iterator i = usługaLista.begin(); i != usługaLista.end(); i++) {
+        int zmienna = (*i)->zwroc_numer_uslugi();
+        if (zmienna == podawanynumer) {
+            cout << "Oto dane usługi: " << podawanynumer << endl;
+            (*i)->wypisz_usluge();
+            
+        }
+    }
+
 }
 void dodaj_opis_do_uslugi(int podawanynumer, string opis) {
     int var = 0;
@@ -423,6 +453,30 @@ void logowanie_klienta(int login) {
     //}
 }
 
+void dodaj_pracownika() {
+    cout << "Podaj kod kierownika: ";
+    int kod;
+    cin >> kod;
+    bool wynik_logowania = Logowanie_kierownika(kod);
+    if (wynik_logowania == true) {
+        string imie;
+        string nazwisko;
+        string numer_telefonu;
+        int kod_pracownika;
+        cout << "Podaj imie: ";
+        cin >> imie;
+        cout << "Podaj nazwisko: ";
+        cin >> nazwisko;
+        cout << "Podaj numer telefonu: ";
+        cin >> numer_telefonu;
+        cout << "Podaj jego kod: ";
+        cin >> kod_pracownika;
+        utworz_pracownika(imie, nazwisko, numer_telefonu, kod_pracownika);
+    }
+    else {
+        cout << "Logowanie błędne" << endl;
+    }
+}
 
 void dodaj_pojazd_zamienny() {
     cout << "Podaj kod kierownika: ";
@@ -615,17 +669,85 @@ void oddaj_do_serwisu() {
         cout << "Podaj swój login: ";
         int clientlogin;
         cin >> clientlogin;
-        utworz_klienta("Abdul", "Abduljewicz", "666666666", 1231);
-        wypisanie_klientow();
+        bool exist = czy_istnieje_klient(clientlogin);
+        if (exist == true) {
+            cout << "Witaj!" << endl;
+            string data_oddania_auta;
+            string opis_prac="";
+            bool czy_przysługuje_zamienne;
+            bool czy_gotowe=false;
+            string rodzaj_usługi;
+            int numer_uslugi;
+            cout << "Podaj datę kiedy chcesz oddać pojazd do serwisu: ";
+            cin >> data_oddania_auta;
+            cout << "Czy chcesz wypożyczyć auto zamienne? [T/N]: ";
+            string wyborzamiennego;
+            if (wyborzamiennego == "T" || wyborzamiennego == "t" || wyborzamiennego == "tak" || wyborzamiennego == "TAK") {
+                czy_przysługuje_zamienne = true;
+                cout << "Auto zamienne zostanie przypisane!" << endl;
+            }
+            else {
+                czy_przysługuje_zamienne = false;
+                cout << "Auto zamienne nie zostanie przypisane" << endl;
+            }
+            cout << "W czym możemy pomóc? Czy to naprawa czy diagnoza? " << endl;
+            cin >> rodzaj_usługi;
+
+                cout << "Wpisz swój login za pomocą liczb np.9898, możesz wymyśleć dowolny! ";
+                cin >> numer_uslugi;
+
+            utworz_usluge(data_oddania_auta, opis_prac, czy_przysługuje_zamienne, czy_gotowe, rodzaj_usługi, numer_uslugi);
+        }
+        else {
+            cout << "Nie znalazłem nikogo z takim kodem..." << endl;
+        }
         
     }
     else if (isclientchoose == "N" || isclientchoose == "n" || isclientchoose == "nie" || isclientchoose == "NIE") {
         cout << "Nie jesteś naszym klientem ale chętnie powitamy Cię w naszym gronie!" << endl;
+        string data_oddania_auta;
+        string opis_prac = "";
+        bool czy_przysługuje_zamienne;
+        bool czy_gotowe = false;
+        string rodzaj_usługi;
+        int numer_uslugi;
+        cout << "Podaj datę kiedy chcesz oddać pojazd do serwisu: ";
+        cin >> data_oddania_auta;
+        cout << "Czy chcesz wypożyczyć auto zamienne? [T/N]: ";
+        string wyborzamiennego;
+        if (wyborzamiennego == "T" || wyborzamiennego == "t" || wyborzamiennego == "tak" || wyborzamiennego == "TAK") {
+            czy_przysługuje_zamienne = true;
+            cout << "Auto zamienne zostanie przypisane!" << endl;
+        }
+        else {
+            czy_przysługuje_zamienne = false;
+            cout << "Auto zamienne nie zostanie przypisane" << endl;
+        }
+        cout << "W czym możemy pomóc? Czy to naprawa czy diagnoza? " << endl;
+        cin >> rodzaj_usługi;
+
+            cout << "Wpisz swój login za pomocą liczb np.9898, możesz wymyśleć dowolny! ";
+            cin >> numer_uslugi;
+
+        utworz_usluge(data_oddania_auta, opis_prac, czy_przysługuje_zamienne, czy_gotowe, rodzaj_usługi, numer_uslugi);
     }
     else {
         cout << "Nie ma takiej możliwości :(" << endl;
     }
 
+}
+
+void sprawdz_status_klient() {
+    cout << "Witaj, podaj swój numer zamówienia/login" << endl;
+    int login;
+    cin >> login;
+    bool czyistynieje = znajdz_usluge(login);
+    if (czyistynieje = true) {
+        wypisz_pojedyncza_usluge(login);
+    }
+    else {
+        cout << "Może się pomyliłeś? " << endl;
+    }
 }
 
 int menu_glowne() {
@@ -720,7 +842,8 @@ void tryb_kierownika() {
     cout << "[4] Pokaż zamówione części" << endl;
     cout << "[5] Pokaż pracowników " << endl;
     cout << "[6] Dodaj pojazd zamienny" << endl;
-    cout << "[7] Wróć do menu głównego " << endl;
+    cout << "[7] Dodaj pracownika " << endl;
+    cout << "[8] Wróć do menu głównego " << endl;
     int wybor;
     cout << "Podaj wybor: ";
     cin >> wybor;
@@ -744,6 +867,9 @@ void tryb_kierownika() {
         dodaj_pojazd_zamienny();
         break;
     case 7:
+        dodaj_pracownika();
+        break;
+    case 8:
         system("cls");
         break;
     default:
@@ -775,6 +901,7 @@ void tryb_klienta() {
         break;
     case 2:
         cout << "Sprawdźmy status Twojej naprawy" << endl;
+        sprawdz_status_klient();
         break;
     case 3:
         cout << "Powrót do menu głównego" << endl;
