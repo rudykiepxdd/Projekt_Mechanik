@@ -13,7 +13,7 @@ Opis projektu:
 
 **Język programowania:** C++
 
-**Język testów jednostkowych:** C++ / Python
+**Język testów jednostkowych:** C++ / Wbudowana opcja w Visual Studio 
 
 
 
